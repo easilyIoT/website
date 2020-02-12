@@ -1,0 +1,1 @@
+export const API_URL = "https://nodo-centrale-casa.herokuapp.com";
