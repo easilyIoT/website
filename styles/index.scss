@@ -3,32 +3,30 @@ $second-p: #bdff00;
 $grad-angle: 90deg;
 
 $primary: #4ac205;
-//$secondary: $palette-light;
-//$success:       ;
-//$info:          ;
-//$warning:       ;
-//$danger:        ;
-//$light:         ;
-//$dark:          ;
-//$body-bg: $bg;
 
 @import "~bootstrap/scss/functions";
 @import "~bootstrap/scss/variables";
 @import "~bootstrap/scss/mixins/_breakpoints";
 @import "~bootstrap/scss/bootstrap";
 
+body {
+        font-family: 'Quicksand' !important;
+}
+
+.container-box {}
+
+.main-box {}
+
 .navbar-brand {
         font-size: 2rem;
         font-weight: 700;
+
 }
 
 .nav-link {
         font-size: 1.25rem;
         font-weight: 500;
 
-        &.active {
-                //      color: $palette-m-dark !important;
-        }
 }
 
 
@@ -50,9 +48,6 @@ $primary: #4ac205;
         }
 }
 
-.container-box {}
-
-.main-box {}
 
 #nprogress {
         pointer-events: none;
@@ -86,5 +81,3 @@ $primary: #4ac205;
         -ms-transform: rotate(3deg) translate(0px, -4px);
         transform: rotate(3deg) translate(0px, -4px);
 }
-
-/* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
