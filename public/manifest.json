@@ -1,8 +1,9 @@
 {
   "name": "Easily IoT",
+  "short_name": "Easily IoT",
+  "display": "standalone",
   "theme_color": "#4ac205",
   "background_color": "#4ac205",
-  "display": "browser",
   "Scope": "/ ",
   "start_url": "/",
   "icons": [
