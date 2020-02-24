@@ -117,7 +117,7 @@ const Clients = () => {
             </Container>
             <Modal show={modalOpen} onHide={handleCloseModal} animation={true}>
                 <Modal.Header closeButton>
-                    <Modal.Title>Genete new client</Modal.Title>
+                    <Modal.Title>Create new client</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <Form noValidate onSubmit={handleSubmit}>

@@ -1,14 +1,19 @@
+$bg: #FA7921;
+$palette-light: #5BC0EB;
+$palette-m-light: #FDE74C;
+$palette-m-dark: #9BC53D;
+$palette-dark: #E55934;
 
 
-$primary: #da4302;
-$secondary: #ffb515;
+//$primary: $palette-dark;
+//$secondary: $palette-light;
 //$success:       ;
 //$info:          ;
 //$warning:       ;
 //$danger:        ;
 //$light:         ;
 //$dark:          ;
-//$body-bg: #032535;
+//$body-bg: $bg;
 
 @import "~bootstrap/scss/functions";
 @import "~bootstrap/scss/variables";
@@ -18,10 +23,37 @@ $secondary: #ffb515;
 
 .navbar-brand {
         font-size: 2rem;
-        font-weight: 500;
+        font-weight: 700;
+        //color: $palette-dark !important;
 }
 
 .nav-link {
         font-size: 1.25rem;
         font-weight: 500;
+        
+        &.active {
+          //      color: $palette-m-dark !important;
+        }
+}
+
+.container-box {
+
+}
+
+.main-box {
+}
+
+@media screen and (max-width: 600px) {
+        h1 {
+                font-size: 2rem
+        }
+        h2 {
+                font-size: 1.5rem
+        }
+        div.component-container {
+                padding: 1rem !important
+        }
+        div.shadowed-container {
+                padding: 2rem !important
+        }
 }

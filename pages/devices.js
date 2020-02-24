@@ -156,7 +156,7 @@ const Devices = () => {
             </Container>
             <Modal show={modalOpen} onHide={handleCloseModal} animation={true}>
                 <Modal.Header closeButton>
-                    <Modal.Title>Genete new Device</Modal.Title>
+                    <Modal.Title>Create new Device</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <Form noValidate onSubmit={handleSubmit}>
