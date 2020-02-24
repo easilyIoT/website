@@ -1,11 +1,8 @@
-$bg: #FA7921;
-$palette-light: #5BC0EB;
-$palette-m-light: #FDE74C;
-$palette-m-dark: #9BC53D;
-$palette-dark: #E55934;
+$first-p: #1e6305;
+$second-p: #bdff00;
+$grad-angle: 90deg;
 
-
-//$primary: $palette-dark;
+$primary: #4ac205;
 //$secondary: $palette-light;
 //$success:       ;
 //$info:          ;
@@ -20,40 +17,74 @@ $palette-dark: #E55934;
 @import "~bootstrap/scss/mixins/_breakpoints";
 @import "~bootstrap/scss/bootstrap";
 
-
 .navbar-brand {
         font-size: 2rem;
         font-weight: 700;
-        //color: $palette-dark !important;
 }
 
 .nav-link {
         font-size: 1.25rem;
         font-weight: 500;
-        
+
         &.active {
-          //      color: $palette-m-dark !important;
+                //      color: $palette-m-dark !important;
         }
 }
 
-.container-box {
-
-}
-
-.main-box {
-}
 
 @media screen and (max-width: 600px) {
         h1 {
-                font-size: 2rem
+                font-size: 2rem;
         }
+
         h2 {
-                font-size: 1.5rem
+                font-size: 1.5rem;
         }
+
         div.component-container {
-                padding: 1rem !important
+                padding: 1rem !important;
         }
+
         div.shadowed-container {
-                padding: 2rem !important
+                padding: 2rem !important;
         }
 }
+
+.container-box {}
+
+.main-box {}
+
+#nprogress {
+        pointer-events: none;
+}
+
+#nprogress .bar {
+        background: #bdff00;
+        background: -webkit-linear-gradient($grad-angle, $first-p, $second-p);
+        background: linear-gradient($grad-angle, $first-p, $second-p);
+       
+        position: fixed;
+        z-index: 10000;
+        top: 0;
+        left: 0;
+
+        width: 100%;
+        height: 4px;
+}
+
+/* Fancy blur effect */
+#nprogress .peg {
+        display: block;
+        position: absolute;
+        right: 0px;
+        width: 100px;
+        height: 100%;
+        box-shadow: 0 0 10px $second-p, 0 0 5px $second-p;
+        opacity: 1;
+
+        -webkit-transform: rotate(3deg) translate(0px, -4px);
+        -ms-transform: rotate(3deg) translate(0px, -4px);
+        transform: rotate(3deg) translate(0px, -4px);
+}
+
+/* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */

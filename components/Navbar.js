@@ -35,7 +35,7 @@ const MyNavbar = () => {
                 <React.Fragment>
                         <Navbar bg="primary" variant="dark" expand="md" collapseOnSelect fixed="top">
                                 <Container>
-                                        <Link href="/" passHref><Navbar.Brand>IoT System</Navbar.Brand></Link>
+                                        <Link href="/" passHref><Navbar.Brand>Easily IoT</Navbar.Brand></Link>
                                         <Navbar.Toggle />
                                         <Navbar.Collapse id="navbar-nav">
                                                 <Nav className="mr-auto">
