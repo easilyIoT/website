@@ -46,7 +46,7 @@ export default class MyApp extends App {
                                         <link rel="apple-touch-icon" href="/images/icons/icon-192x192.png"/>
                                         
                                         <link href="https://fonts.googleapis.com/css?family=Quicksand&display=swap" rel="stylesheet" />
-                                        <script src="https://kit.fontawesome.com/3b2e248047.js" crossOrigin="anonymous"></script>
+                                        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.1/css/all.css" integrity="sha384-v8BU367qNbs/aIZIxuivaU55N5GPF89WBerHoGA4QTcbUjYiLQtKdrfXnqAcXyTv" crossorigin="anonymous"/>
                                 </Head>
                                 <div style={{ height: "100vh" }} >
                                         <Navbar />
