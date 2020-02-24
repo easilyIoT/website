@@ -1,1 +1,1 @@
-export const API_URL = "https://nodo-centrale-casa.herokuapp.com";
+export const API_URL = process.env.NODE_ENV === "production" ?  "https://nodo-centrale-casa.herokuapp.com" : "http://localhost:8000";

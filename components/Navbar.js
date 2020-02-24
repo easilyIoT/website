@@ -35,23 +35,23 @@ const MyNavbar = () => {
                 <React.Fragment>
                         <Navbar bg="primary" variant="dark" expand="md" collapseOnSelect fixed="top">
                                 <Container>
-                                        <Link href="/" passHref><Navbar.Brand ><h3>IoT System</h3></Navbar.Brand></Link>
+                                        <Link href="/" passHref><Navbar.Brand>IoT System</Navbar.Brand></Link>
                                         <Navbar.Toggle />
                                         <Navbar.Collapse id="navbar-nav">
                                                 <Nav className="mr-auto">
                                                         <Link href="/" passHref>
                                                                 <Nav.Link as="span">
-                                                                        <a className="NavLink-Next"><h5>Home</h5></a>
+                                                                        <a className="NavLink-Next">Home</a>
                                                                 </Nav.Link>
                                                         </Link>
                                                         <Link href="/clients" passHref>
                                                                 <Nav.Link as="span">
-                                                                        <a className="NavLink-Next"><h5>Clients</h5></a>
+                                                                        <a className="NavLink-Next">Clients</a>
                                                                 </Nav.Link>
                                                         </Link>
                                                         <Link href="/devices" passHref>
                                                                 <Nav.Link as="span">
-                                                                        <a className="NavLink-Next"><h5>Devices</h5></a>
+                                                                        <a className="NavLink-Next">Devices</a>
                                                                 </Nav.Link>
                                                         </Link>
                                                 </Nav>
@@ -60,16 +60,16 @@ const MyNavbar = () => {
                                                                 token
                                                                         ? (
                                                                                 <Nav.Link onClick={handleLogout}>
-                                                                                        <h5>Logout</h5>
+                                                                                        Logout
                                                                                 </Nav.Link>
                                                                         )
                                                                         : (
                                                                                 <React.Fragment>
                                                                                         <Nav.Link onClick={handleLogin}>
-                                                                                                <h5>Login</h5>
+                                                                                                Login
                                                                                         </Nav.Link>
                                                                                         <Nav.Link onClick={handleRegister}>
-                                                                                                <h5>Register</h5>
+                                                                                                Register
                                                                                         </Nav.Link>
 
                                                                                 </React.Fragment>

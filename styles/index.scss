@@ -1,0 +1,27 @@
+
+
+$primary: #da4302;
+$secondary: #ffb515;
+//$success:       ;
+//$info:          ;
+//$warning:       ;
+//$danger:        ;
+//$light:         ;
+//$dark:          ;
+//$body-bg: #032535;
+
+@import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/variables";
+@import "~bootstrap/scss/mixins/_breakpoints";
+@import "~bootstrap/scss/bootstrap";
+
+
+.navbar-brand {
+        font-size: 2rem;
+        font-weight: 500;
+}
+
+.nav-link {
+        font-size: 1.25rem;
+        font-weight: 500;
+}

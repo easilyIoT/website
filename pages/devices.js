@@ -127,8 +127,8 @@ const Devices = () => {
                             <th>State</th>
                             <th>UUID</th>
                             <th>
-                                <Button size="sm" className="mr-1" variant="outline-primary" onClick={handleOpenModal}><FontAwesomeIcon icon={faPlus} /></Button>
-                                <Button size="sm" variant="outline-primary" onClick={fetchData}><FontAwesomeIcon icon={faSync} /></Button>
+                                <Button size="sm" className="mr-1" variant="outline-primary" onClick={handleOpenModal}><i className="fas fa-plus"></i></Button>
+                                <Button size="sm" variant="outline-primary" onClick={fetchData}><i className="fas fa-sync"></i></Button>
                             </th>
                         </tr>
                     </thead>
@@ -141,14 +141,14 @@ const Devices = () => {
                                     <p key={i}>
                                         {action}
                                         <a href="" onClick={handleTriggerDevice(device._id, action)} style={{ float: "right" }}>
-                                            <FontAwesomeIcon icon={faCogs} />
+                                            <i className="fas fa-cogs"></i>
                                         </a>
                                     </p>
                                 ))}
                                 </td>
                                 <td>{device.state}</td>
                                 <td>{device._id}</td>
-                                <td><Button size="sm" variant="outline-primary" onClick={handleDeleteDevice(device._id)}><FontAwesomeIcon icon={faTrash} /></Button></td>
+                                <td><Button size="sm" variant="outline-primary" onClick={handleDeleteDevice(device._id)}><i className="fas fa-trash"></i></Button></td>
                             </tr>
                         )) : null}
                     </tbody>

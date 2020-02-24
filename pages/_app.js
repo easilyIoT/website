@@ -1,11 +1,12 @@
-import App from "next/app"
+import App from "next/app";
+import Head from "next/head";
 import Router from "next/router";
 import NProgress from "nprogress"
 
 import Navbar from "../components/Navbar";
 
 import "nprogress/nprogress.css"
-import "bootstrap/dist/css/bootstrap.min.css"
+import "../styles/index.scss"
 
 export default class MyApp extends App {
 
@@ -31,12 +32,15 @@ export default class MyApp extends App {
 
                 return (
                         <React.Fragment>
+                                <Head>
+                                        <script src="https://kit.fontawesome.com/3b2e248047.js" crossorigin="anonymous"></script>
+                                </Head>
                                 <div style={{ height: "100vh" }} >
                                         <Navbar />
                                         <div style={{ minHeight: "70px" }} />
-                                        <div className="p-5" style={{ height: "90%"}} >
+                                        <div className="p-5 shadowed-container" style={{ height: "90%"}} >
                                                 <div className="shadow-lg rounded h-100">
-                                                        <div className="p-5 h-100 component-h">
+                                                        <div className="p-5 h-100 component-h component-container">
                                                                 <Component {...pageProps} />
                                                         </div>
                                                 </div>
@@ -49,6 +53,12 @@ export default class MyApp extends App {
                                                 }
                                                 h2 {
                                                         font-size: 1.5rem
+                                                }
+                                                div.component-container {
+                                                        padding: 1rem !important
+                                                }
+                                                div.shadowed-container {
+                                                        padding: 2rem !important
                                                 }
                                         }
                                 `}</style>

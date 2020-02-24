@@ -100,7 +100,7 @@ const Clients = () => {
                             <th>Name</th>
                             <th>Client ID</th>
                             <th>Client Secret</th>
-                            <th><Button size="sm" variant="outline-primary" onClick={handleOpenModal}><FontAwesomeIcon icon={faPlus} /></Button></th>
+                            <th><Button size="sm" variant="outline-primary" onClick={handleOpenModal}><i className="fas fa-plus"></i></Button></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -109,7 +109,7 @@ const Clients = () => {
                                 <td>{client.name}</td>
                                 <td>{client.client_id}</td>
                                 <td>{client.client_secret}</td>
-                                <td><Button size="sm" variant="outline-primary" onClick={handleDeleteClient(client)}><FontAwesomeIcon icon={faTrash} /></Button></td>
+                                <td><Button size="sm" variant="outline-primary" onClick={handleDeleteClient(client)}><i className="fas fa-trash"></i></Button></td>
                             </tr>
                         )) : null}
                     </tbody>
