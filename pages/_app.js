@@ -43,7 +43,8 @@ export default class MyApp extends App {
                                         <link rel="manifest" href="/manifest.json" />
                                         <link href='/images/icons/favicon_32x32.png' rel='icon' type='image/png' sizes='32x32' />
                                         <meta name="theme-color" content="#4ac205" />
-
+                                        <link rel="apple-touch-icon" href="/images/icons/icon-192x192.png"/>
+                                        
                                         <link href="https://fonts.googleapis.com/css?family=Quicksand&display=swap" rel="stylesheet" />
                                         <script src="https://kit.fontawesome.com/3b2e248047.js" crossOrigin="anonymous"></script>
                                 </Head>
