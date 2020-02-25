@@ -1,35 +1,58 @@
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useState, useContext } from "react";
 import Head from 'next/head';
-import axios from "axios"
-import { Table, Container, Button, Modal, Form } from "react-bootstrap"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faPlus, faTrash, faCogs, faSync } from "@fortawesome/free-solid-svg-icons"
-import { Cookies } from "react-cookie"
-import { useFormik } from "formik"
-import NProgress from "nprogress"
-import { verify, redirect } from "../utils"
+import axios from "axios";
+import { Table, Container, Button, Modal, Form } from "react-bootstrap";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlus, faTrash, faCogs, faSync } from "@fortawesome/free-solid-svg-icons";
+import { Cookies } from "react-cookie";
+import { useFormik } from "formik";
+import NProgress from "nprogress";
 
-import { API_URL } from "../config"
+import ErrorContext from "../context/ErrorContext";
+
+import { verify, redirect } from "../utils";
+import { isErrorResponse } from "../utils/errors";
+
+import { API_URL } from "../config";
 
 
 const cookies = new Cookies();
 
 const Devices = () => {
     const [devices, setDevices] = useState(null);
+    const [deviceTypes, setDeviceTypes] = useState(null);
     const [modalOpen, setModalOpen] = useState(false);
+    
+    const { setError } = useContext(ErrorContext);
 
     const token = cookies.get("token");
 
     const fetchData = async () => {
+        NProgress.start();
+
         try {
             const result = await axios.get(`${API_URL}/api/device`, {
                 headers: { Authorization: token }
             });
-            console.log(result.data.devices);
+
             setDevices(result.data.devices);
         } catch (e) {
-            console.error(e.response.data);
+            if (isErrorResponse(e))
+                setError(e.response.data.message)
         }
+
+        try {
+            const result = await axios.get(`${API_URL}/api/device/types`, {
+                headers: { Authorization: token }
+            });
+
+            setDeviceTypes(result.data.types);
+        } catch (e) {
+            if (isErrorResponse(e))
+                setError(e.response.data.message)
+        }
+        
+        NProgress.done();
     }
 
     useEffect(() => {
@@ -58,7 +81,9 @@ const Devices = () => {
         } catch (e) {
 
             NProgress.done();
-            console.error(e.response);
+            
+            if (isErrorResponse(e))
+                setError(e.response.data.message)
         }
     };
 
@@ -77,7 +102,9 @@ const Devices = () => {
         } catch (e) {
 
             NProgress.done();
-            console.error(e.response)
+
+            if (isErrorResponse(e))
+                setError(e.response.data.message)
         }
     }
 
@@ -97,10 +124,9 @@ const Devices = () => {
             NProgress.done();
 
         } catch (e) {
-
             NProgress.done();
-            console.error(e.response);
-
+            if (isErrorResponse(e))
+                setError(e.response.data.message, e.response.config.url)
         }
     };
 
@@ -108,7 +134,7 @@ const Devices = () => {
         onSubmit: handleCreateDevice,
         initialValues: {
             name: "",
-            type: "LockController"
+            type: deviceTypes ? deviceTypes[0] : "none"
         }
     });
     return (
@@ -175,7 +201,10 @@ const Devices = () => {
                         <Form.Group>
                             <Form.Label>DeviceType</Form.Label>
                             <Form.Control name="type" onChange={handleChange} value={values.type} as="select">
-                                <option value="LockController" label="LockController" />
+                                {deviceTypes
+                                    ? deviceTypes.map((type, i) => <option value={type} key={i} label={type} />)
+                                    : null
+                                }
                             </Form.Control>
                         </Form.Group>
                     </Form>

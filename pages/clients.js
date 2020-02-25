@@ -21,6 +21,7 @@ const Clients = () => {
     const token = cookies.get("token");
 
     const fetchData = async () => {
+        NProgress.start();
         try {
             const result = await axios.get(`${API_URL}/oauth/client`, {
                 headers: { Authorization: token }
@@ -30,7 +31,9 @@ const Clients = () => {
         } catch (e) {
             console.error(e);
         }
-    }
+        NProgress.done();
+    
+    };
 
     useEffect(() => {
 

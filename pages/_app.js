@@ -4,11 +4,52 @@ import Router from "next/router";
 import NProgress from "nprogress"
 
 import Navbar from "../components/Navbar";
+import ErrorDisplayer from "../components/ErrorDisplayer"
+
+import { ErrorProvider, setError, deleteError } from "../context/ErrorContext"
 
 import "nprogress/nprogress.css"
 import "../styles/index.scss"
 
 export default class MyApp extends App {
+
+        state = {
+                errors: []
+        };
+
+        setError = (newError, path) => {
+                this.setState(state => {
+                        state.errors.push({
+                                message: newError,
+                                path,
+                                timeout: setTimeout(() =>
+                                        this.setState({
+                                                errors: this.state.errors.filter(error => error.message !== newError)
+                                        }),
+                                        5000
+                                ),
+                                isVisible: true
+                        });
+                        return state;
+                });
+        };
+        
+        deleteError = (newError) => {
+                this.setState({
+                        errors: errors.filter(error => error === newError ? !!clearTimeout(error.timeout) : true)
+                })
+        };
+
+        closeToast = (index) => {
+                this.setState({
+                        errors: this.state.errors.map((error, i) => {
+                                if (i === index)
+                                        error.isVisible = false;
+                                
+                                return error;
+                        })
+                })
+        }
 
         componentDidMount() {
                 NProgress.configure({
@@ -54,9 +95,14 @@ export default class MyApp extends App {
                                         <div className="p-5 shadowed-container container-box" style={{ height: "90%" }} >
                                                 <div className="shadow-lg rounded h-100 main-box">
                                                         <div className="p-5 h-100 component-h component-container">
-                                                                <Component {...pageProps} />
+                                                                <ErrorProvider value={{ setError: this.setError, deleteError: this.deleteError }}>
+                                                                        <Component {...pageProps} />
+                                                                </ErrorProvider>
                                                         </div>
                                                 </div>
+                                        </div>
+                                        <div className="error-box">
+                                                <ErrorDisplayer errors={this.state.errors} closeToast={this.closeToast.bind(this)} />
                                         </div>
                                 </div>
                         </React.Fragment>
