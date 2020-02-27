@@ -22,7 +22,7 @@ const Devices = () => {
     const [devices, setDevices] = useState(null);
     const [deviceTypes, setDeviceTypes] = useState(null);
     const [modalOpen, setModalOpen] = useState(false);
-    
+
     const { setError } = useContext(ErrorContext);
 
     const token = cookies.get("token");
@@ -38,7 +38,7 @@ const Devices = () => {
             setDevices(result.data.devices);
         } catch (e) {
             if (isErrorResponse(e))
-                setError(e.response.data.message)
+                setError(e.response.data.message, e.response.status)
         }
 
         try {
@@ -49,9 +49,9 @@ const Devices = () => {
             setDeviceTypes(result.data.types);
         } catch (e) {
             if (isErrorResponse(e))
-                setError(e.response.data.message)
+                setError(e.response.data.message, e.response.status)
         }
-        
+
         NProgress.done();
     }
 
@@ -65,8 +65,12 @@ const Devices = () => {
     const handleCloseModal = () => setModalOpen(false);
 
     const handleCreateDevice = async ({ name, type }) => {
+
+        if (type === "none")
+            return
+
+        NProgress.start();
         try {
-            NProgress.start();
 
             await axios.post(`${API_URL}/api/device`, {
                 name,
@@ -74,17 +78,15 @@ const Devices = () => {
             }, {
                 headers: { Authorization: token }
             });
-            NProgress.done();
 
             fetchData();
             handleCloseModal();
         } catch (e) {
-
-            NProgress.done();
-            
             if (isErrorResponse(e))
-                setError(e.response.data.message)
+                setError(e.response.data.message, e.response.status)
         }
+        NProgress.done();
+
     };
 
     const handleDeleteDevice = deviceID => async () => {
@@ -104,7 +106,7 @@ const Devices = () => {
             NProgress.done();
 
             if (isErrorResponse(e))
-                setError(e.response.data.message)
+                setError(e.response.data.message, e.response.status)
         }
     }
 
@@ -126,7 +128,7 @@ const Devices = () => {
         } catch (e) {
             NProgress.done();
             if (isErrorResponse(e))
-                setError(e.response.data.message, e.response.config.url)
+                setError(e.response.data.message, e.response.status)
         }
     };
 
@@ -150,7 +152,9 @@ const Devices = () => {
                             <th>Name</th>
                             <th>Device Type</th>
                             <th>Actions</th>
+                            <th>Reads</th>
                             <th>State</th>
+                            <th>Connectivity</th>
                             <th>UUID</th>
                             <th>
                                 <Button size="sm" className="mr-1" variant="outline-primary" onClick={handleOpenModal}><i className="fas fa-plus"></i></Button>
@@ -172,7 +176,12 @@ const Devices = () => {
                                     </p>
                                 ))}
                                 </td>
+                                <td>{device.reads.map((read, i) => (
+                                    <p key={i}>{read}</p>
+                                ))}
+                                </td>
                                 <td>{device.state}</td>
+                                <td>{device.isOnline ? "Online" : "Offline"}</td>
                                 <td>{device._id}</td>
                                 <td><Button size="sm" variant="outline-primary" onClick={handleDeleteDevice(device._id)}><i className="fas fa-trash"></i></Button></td>
                             </tr>
@@ -200,11 +209,14 @@ const Devices = () => {
                         </Form.Group>
                         <Form.Group>
                             <Form.Label>DeviceType</Form.Label>
-                            <Form.Control name="type" onChange={handleChange} value={values.type} as="select">
-                                {deviceTypes
-                                    ? deviceTypes.map((type, i) => <option value={type} key={i} label={type} />)
-                                    : null
-                                }
+                            <Form.Control name="type" onChange={handleChange} value={values.type} as="select" >
+                                <React.Fragment>
+                                    <option value="none" key={-1} label="none" defaultValue/>
+                                    {deviceTypes
+                                        ? deviceTypes.map((type, i) => <option value={type} key={i} label={type} />)
+                                        : null
+                                    }
+                                </React.Fragment>
                             </Form.Control>
                         </Form.Group>
                     </Form>

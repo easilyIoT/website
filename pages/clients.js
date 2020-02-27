@@ -1,13 +1,15 @@
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useState, useContext } from "react"
 import Head from 'next/head';
 import axios from "axios"
 import { Table, Container, Button, Modal, Form } from "react-bootstrap"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faPlus, faTrash } from "@fortawesome/free-solid-svg-icons"
 import { Cookies } from "react-cookie"
 import { useFormik } from "formik"
 import NProgress from "nprogress"
+
+import ErrorContext from "../context/ErrorContext" 
+
 import { verify, redirect } from "../utils"
+import { isErrorResponse } from "../utils/errors";
 
 import { API_URL } from "../config"
 
@@ -17,6 +19,7 @@ const cookies = new Cookies();
 const Clients = () => {
     const [clients, setClients] = useState(null);
     const [modalOpen, setModalOpen] = useState(false);
+    const { setError } = useContext(ErrorContext);
 
     const token = cookies.get("token");
 
@@ -29,7 +32,8 @@ const Clients = () => {
 
             setClients(result.data.clients);
         } catch (e) {
-            console.error(e);
+            if (isErrorResponse(e))
+                setError(e.response.data.message, e.response.status)
         }
         NProgress.done();
     
@@ -60,7 +64,8 @@ const Clients = () => {
         } catch (e) {
 
             NProgress.done();
-            console.error(e);
+            if (isErrorResponse(e))
+                setError(e.response.data.message, e.response.status)
         }
     };
 
@@ -79,7 +84,8 @@ const Clients = () => {
         } catch (e) {
 
             NProgress.done();
-            console.error(e)
+            if (isErrorResponse(e))
+                setError(e.response.data.message, e.response.status)
         }
     }
 

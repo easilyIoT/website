@@ -17,11 +17,11 @@ export default class MyApp extends App {
                 errors: []
         };
 
-        setError = (newError, path) => {
+        setError = (newError, status) => {
                 this.setState(state => {
                         state.errors.push({
                                 message: newError,
-                                path,
+                                status,
                                 timeout: setTimeout(() =>
                                         this.setState({
                                                 errors: this.state.errors.filter(error => error.message !== newError)
@@ -87,7 +87,7 @@ export default class MyApp extends App {
                                         <link rel="apple-touch-icon" href="/images/icons/icon-192x192.png"/>
                                         
                                         <link href="https://fonts.googleapis.com/css?family=Quicksand&display=swap" rel="stylesheet" />
-                                        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.1/css/all.css" integrity="sha384-v8BU367qNbs/aIZIxuivaU55N5GPF89WBerHoGA4QTcbUjYiLQtKdrfXnqAcXyTv" crossorigin="anonymous"/>
+                                        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.1/css/all.css" integrity="sha384-v8BU367qNbs/aIZIxuivaU55N5GPF89WBerHoGA4QTcbUjYiLQtKdrfXnqAcXyTv" crossOrigin="anonymous"/>
                                 </Head>
                                 <div style={{ height: "100vh" }} >
                                         <Navbar />
