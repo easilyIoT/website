@@ -1,24 +1,28 @@
-import React, { useState } from "react"
+import React, { useState, useContext } from "react"
+import Router from "next/router"
+import Head from 'next/head';
 import axios from "axios"
 import { Cookies } from "react-cookie"
 import { useFormik } from "formik"
 import * as Yup from "yup"
-import Router from "next/router"
-import Head from 'next/head';
+import { Form, Button, Alert } from "react-bootstrap";
+import NProgress from "nprogress";
 
 import { verify, redirect } from "../utils"
-import { Form, Button, Alert } from "react-bootstrap";
 import CenterInScreen from "../components/CenterInScreen"
 import { API_URL } from "../config"
+import ErrorContext from "../context/ErrorContext";
+
 
 const cookies = new Cookies();
 
 const Login = ({ query }) => {
-    
+
     const [errorMessage, setErrorMessage] = useState(null);
+    const { setError } = useContext(ErrorContext);
 
     const submitHandler = async ({ email, password }) => {
-
+        NProgress.start();
         try {
             const { data } = await axios.post(`${API_URL}/auth/login`, {
                 email,
@@ -34,8 +38,8 @@ const Login = ({ query }) => {
 
             cookies.set("token", token);
 
-            setErrorMessage(null);
 
+            NProgress.done();
             if (query.cb) {
                 Router.push({
                     pathname: query.cb,
@@ -47,7 +51,10 @@ const Login = ({ query }) => {
 
 
         } catch (e) {
-            setErrorMessage(e.message);
+            NProgress.done();
+
+            if (isErrorResponse(e))
+                setError(e.response.data.message, e.response.status)
         }
 
     };
@@ -106,7 +113,7 @@ const Login = ({ query }) => {
                     </Button>
                 </Form>
                 {
-                    errorMessage 
+                    errorMessage
                         ? (
                             <Alert variant="danger" className="mt-5 w-50" >{errorMessage}</Alert>
                         )
@@ -117,9 +124,7 @@ const Login = ({ query }) => {
     );
 };
 
-Login.getInitialProps = async ctx => {
-
-    const isLogged = await verify(ctx);
+Login.getInitialProps = async (ctx, isLogged) => {
 
     if (isLogged) {
         redirect("/", ctx);

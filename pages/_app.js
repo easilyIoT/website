@@ -10,8 +10,23 @@ import { ErrorProvider, setError, deleteError } from "../context/ErrorContext"
 
 import "nprogress/nprogress.css"
 import "../styles/index.scss"
+import { verify } from "../utils";
 
 export default class MyApp extends App {
+
+        static async getInitialProps({ Component, router, ctx }) {
+
+                const isLogged = await verify(ctx);
+
+                let pageProps = {};
+
+                if (Component.getInitialProps)
+                        pageProps = await Component.getInitialProps(ctx, isLogged);
+                
+                pageProps.isLogged = isLogged;
+                
+                return { pageProps };
+        }
 
         state = {
                 errors: []
@@ -90,11 +105,11 @@ export default class MyApp extends App {
                                         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.1/css/all.css" integrity="sha384-v8BU367qNbs/aIZIxuivaU55N5GPF89WBerHoGA4QTcbUjYiLQtKdrfXnqAcXyTv" crossOrigin="anonymous"/>
                                 </Head>
                                 <div style={{ height: "100vh" }} >
-                                        <Navbar />
+                                        <Navbar isLogged={pageProps.isLogged} />
                                         <div style={{ minHeight: "10%" }} />
-                                        <div className="p-5 shadowed-container container-box" style={{ height: "90%" }} >
+                                        <div className="p-5 shadowed-container container-box" style={{ height: "90%"}}>
                                                 <div className="shadow-lg rounded h-100 main-box">
-                                                        <div className="p-5 h-100 component-h component-container">
+                                                        <div className="p-5 component-h component-container h-100" style={{ overflowY: "auto"}}>
                                                                 <ErrorProvider value={{ setError: this.setError, deleteError: this.deleteError }}>
                                                                         <Component {...pageProps} />
                                                                 </ErrorProvider>

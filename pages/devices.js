@@ -2,8 +2,6 @@ import React, { useEffect, useState, useContext } from "react";
 import Head from 'next/head';
 import axios from "axios";
 import { Table, Container, Button, Modal, Form } from "react-bootstrap";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus, faTrash, faCogs, faSync } from "@fortawesome/free-solid-svg-icons";
 import { Cookies } from "react-cookie";
 import { useFormik } from "formik";
 import NProgress from "nprogress";
@@ -157,8 +155,8 @@ const Devices = () => {
                             <th>Connectivity</th>
                             <th>UUID</th>
                             <th>
-                                <Button size="sm" className="mr-1" variant="outline-primary" onClick={handleOpenModal}><i className="fas fa-plus"></i></Button>
-                                <Button size="sm" variant="outline-primary" onClick={fetchData}><i className="fas fa-sync"></i></Button>
+                                <Button size="sm" className="mr-1" variant="primary" onClick={handleOpenModal}><i className="fas fa-plus"></i></Button>
+                                <Button size="sm" variant="primary" onClick={fetchData}><i className="fas fa-sync"></i></Button>
                             </th>
                         </tr>
                     </thead>
@@ -183,7 +181,7 @@ const Devices = () => {
                                 <td>{device.state}</td>
                                 <td>{device.isOnline ? "Online" : "Offline"}</td>
                                 <td>{device._id}</td>
-                                <td><Button size="sm" variant="outline-primary" onClick={handleDeleteDevice(device._id)}><i className="fas fa-trash"></i></Button></td>
+                                <td><Button size="sm" variant="primary" onClick={handleDeleteDevice(device._id)}><i className="fas fa-trash"></i></Button></td>
                             </tr>
                         )) : null}
                     </tbody>
@@ -229,9 +227,7 @@ const Devices = () => {
     );
 }
 
-Devices.getInitialProps = async ctx => {
-    const isLogged = await verify(ctx);
-
+Devices.getInitialProps = async (ctx, isLogged) => {
 
     if (!isLogged) {
         redirect("/login", ctx, { cb: "/devices", ...ctx.query });

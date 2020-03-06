@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import Head from "next/head";
 import Router from "next/router"
 import axios from "axios"
@@ -6,10 +6,13 @@ import { Cookies } from "react-cookie"
 import { Form, Button, Alert } from "react-bootstrap"
 import * as Yup from "yup"
 import { useFormik } from "formik"
+import NProgress from "nprogress";
 
 import CenterInScreen from "../components/CenterInScreen";
 
 import { verify, redirect } from "../utils/index";
+import ErrorContext from "../context/ErrorContext";
+
 
 import { API_URL } from "../config"
 
@@ -18,17 +21,25 @@ const cookies = new Cookies();
 const Register = () => {
    
     const [registerError, setRegisterError] = useState(null);
-    
+    const { setError } = useContext(ErrorContext);
 
     const submitHandler = async ({ email, password }) => {
+        NProgress.start();
+
         try {
             await axios.post(`${API_URL}/auth/register`, { email, password });
 
             cookies.set("token", response);
+            
+            NProgress.done();
+
             Router.push("/");
 
         } catch (e) {
-            setRegisterError(e.response.data.message);
+            NProgress.done();
+            
+            if (isErrorResponse(e))
+                setError(e.response.data.message, e.response.status)
         }   
     }
 
@@ -99,9 +110,7 @@ const Register = () => {
 
 
 
-Register.getInitialProps = async ctx => {
-
-    const isLogged = await verify(ctx);
+Register.getInitialProps = async (ctx, isLogged) => {
 
     if (isLogged) {
        redirect("/", ctx);

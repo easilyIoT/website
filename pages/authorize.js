@@ -88,9 +88,7 @@ const Authorize = ({ client, error, query }) => {
 }
 
 
-Authorize.getInitialProps = async ctx => {
-    const logged = await verify(ctx);
-
+Authorize.getInitialProps = async (ctx, logged) => {
 
     if (!logged) {
         redirect("/login", ctx, { cb: "/authorize", ...ctx.query })

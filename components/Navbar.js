@@ -1,17 +1,18 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useRouter } from "next/router"
 import Link from "next/link"
 import { Cookies } from "react-cookie"
 import Router from "next/router"
-
 import { Nav, Navbar, Container } from "react-bootstrap"
+
+import routes from "../utils/routes"
 
 const cookies = new Cookies();
 
-const MyNavbar = () => {
+const MyNavbar = ({ isLogged }) => {
+        const router = useRouter();
 
-        const token = cookies.get("token") !== "null" ? cookies.get("token") : null;
         
-
         const handleLogout = () => {
                 cookies.remove("token");
 
@@ -39,25 +40,17 @@ const MyNavbar = () => {
                                         <Navbar.Toggle />
                                         <Navbar.Collapse id="navbar-nav">
                                                 <Nav className="mr-auto">
-                                                        <Link href="/" passHref>
-                                                                <Nav.Link as="span">
-                                                                        <a className="NavLink-Next">Home</a>
-                                                                </Nav.Link>
-                                                        </Link>
-                                                        <Link href="/clients" passHref>
-                                                                <Nav.Link as="span">
-                                                                        <a className="NavLink-Next">Clients</a>
-                                                                </Nav.Link>
-                                                        </Link>
-                                                        <Link href="/devices" passHref>
-                                                                <Nav.Link as="span">
-                                                                        <a className="NavLink-Next">Devices</a>
-                                                                </Nav.Link>
-                                                        </Link>
+                                                        {routes.map((route, i) => (
+                                                                <Link key={i} href={route.path} passHref>
+                                                                        <Nav.Link as="span" active={route.path === router.asPath}>
+                                                                                <a className="NavLink-Next">{route.name}</a>
+                                                                        </Nav.Link>
+                                                                </Link> 
+                                                        ))}
                                                 </Nav>
                                                 <Nav>
                                                         {
-                                                                token
+                                                                isLogged
                                                                         ? (
                                                                                 <Nav.Link onClick={handleLogout}>
                                                                                         Logout
@@ -82,7 +75,7 @@ const MyNavbar = () => {
                                 </Container>
                         </Navbar>
                         <style jsx>
-                                {`
+                        {`
                                 .NavLink-Next {
                                         cursor: pointer;
                                 }

@@ -152,9 +152,7 @@ const Clients = () => {
     );
 }
 
-Clients.getInitialProps = async ctx => {
-    const isLogged = await verify(ctx);
-
+Clients.getInitialProps = async (ctx, isLogged) => {
 
     if (!isLogged) {
         redirect("/login", ctx, { cb: "/clients", ...ctx.query });

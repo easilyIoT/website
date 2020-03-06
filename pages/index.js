@@ -5,7 +5,7 @@ import CenterInScreen from "../components/CenterInScreen";
 
 import circuitBoard from "../public/circuit-board.svg"
 
-const Index = () => (
+const Index = ({ isLogged }) => (
         <React.Fragment>
                 <Head>
                         <title>IoT System</title>

@@ -35,6 +35,10 @@ body {
 
 }
 
+.btn { 
+        box-shadow: 0 0.125rem 0.625rem rgba(74,194,5,0.4), 0 0.0625rem 0.125rem rgba(74,194,5,0.5)
+}
+
 
 @media screen and (max-width: 600px) {
         h1 {
